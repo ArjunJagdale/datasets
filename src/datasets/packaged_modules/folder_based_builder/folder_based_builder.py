@@ -59,6 +59,15 @@ class FolderBasedBuilder(datasets.GeneratorBasedBuilder):
 
     def _info(self):
         return datasets.DatasetInfo(features=self.config.features)
+    def _info(self):
+        if not self.config.data_dir and not self.config.data_files:
+            raise ValueError(
+                "Folder-based datasets require either `data_dir` or `data_files` to be specified. "
+                "Neither was provided."
+            )
+
+        return datasets.DatasetInfo(features=self.config.features)
+
 
     def _split_generators(self, dl_manager):
         if not self.config.data_files:
